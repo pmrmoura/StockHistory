@@ -22,12 +22,5 @@
 
 //#-hidden-code
 
-import UIKit
-import PlaygroundSupport
-
-let viewController = IntroViewController()
-
-PlaygroundPage.current.liveView = viewController
-PlaygroundPage.current.needsIndefiniteExecution = true
 
 //#-end-hidden-code

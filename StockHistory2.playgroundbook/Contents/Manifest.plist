@@ -14,8 +14,6 @@
 	<string>ios13.0</string>
 	<key>DevelopmentRegion</key>
 	<string>en</string>
-	<key>ImageReference</key>
-	<string>WWDC19Cover.jpg</string>
 	<key>Name</key>
 	<string>Momentum</string>
 	<key>SwiftVersion</key>
