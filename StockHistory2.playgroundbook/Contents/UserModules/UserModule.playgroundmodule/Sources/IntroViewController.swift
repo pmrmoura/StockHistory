@@ -5,6 +5,8 @@ import PlaygroundSupport
 public class IntroViewController : UIViewController {
     var crysesNameLabel: UILabel = UILabel()
     var curiosityLabel: UILabel = UILabel()
+    
+    var selectedButton: UIButton? = nil
 
     public override func viewDidLoad() {
         let view = UIView()
@@ -18,16 +20,24 @@ public class IntroViewController : UIViewController {
         self.addCryses()
         
         for (index, crise) in crises.enumerated(){
-            self.renderButtons(name: crise.name, index: index)
+            self.renderButtons(name: crise.key, index: index)
         }
-        
-        
-        
     }
     
     @objc func buttonAction (sender: UIButton!) {
+        let lightGreen = UIColor(red:0.14, green:1.00, blue:0.52, alpha:1.00)
         
-        renderCrysesLabels(crysesName: sender?.titleLabel?.text ?? "", crysesCuriosity: "2008 foi foda")
+        if (selectedButton != nil) {
+            selectedButton?.backgroundColor = UIColor(red:0.83, green:0.82, blue:0.89, alpha:1.00)
+        }
+        
+        sender.backgroundColor = lightGreen
+        
+        selectedButton = sender
+        
+        let curiosity = crises[sender.titleLabel?.text ?? ""]
+        
+        renderCrysesLabels(crysesName: sender?.titleLabel?.text ?? "", crysesCuriosity: curiosity?.curiosity ?? "")
         
         var chart = UIImage(named: "chart")
         
@@ -39,7 +49,7 @@ public class IntroViewController : UIViewController {
         
         view.addSubview(chartView)
         
-        let lightGreen = UIColor(red:0.14, green:1.00, blue:0.52, alpha:1.00)
+        
         drawLineFromPointToPoint(startX: 50, toEndingX: 120, startingY: 550, toEndingY: 300, ofColor: lightGreen, widthOfLine: 15, inView: self.view)
         drawLineFromPointToPoint(startX: 150, toEndingX: 220, startingY: 300, toEndingY: 500, ofColor: lightGreen, widthOfLine: 15, inView: self.view)
         drawLineFromPointToPoint(startX: 220, toEndingX: 290, startingY: 500, toEndingY: 300, ofColor: lightGreen, widthOfLine: 15, inView: self.view)
@@ -64,13 +74,15 @@ public class IntroViewController : UIViewController {
         button.titleLabel?.allowsDefaultTighteningForTruncation = true
         button.titleLabel?.numberOfLines = 0
         button.titleLabel?.adjustsFontSizeToFitWidth = true
+        
         button.showsTouchWhenHighlighted = true
         button.frame = CGRect(x: x, y: y, width: 120, height: 120)
         button.setTitle(name, for: UIControl.State.normal)
         button.setTitleColor(.black, for: UIControl.State.normal)
         button.backgroundColor = UIColor(red:0.83, green:0.82, blue:0.89, alpha:1.00)
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
-        button.layer.borderWidth = 1.0
+        button.layer.borderWidth = 4.0
+        button.layer.borderColor = UIColor.darkGray.cgColor
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         view.addSubview(button)
@@ -93,6 +105,8 @@ public class IntroViewController : UIViewController {
     func addCryses() {
         createCryseAddToArray(name: "Crise de 29", stockData: [0.0], curiosity: "A industria cafeeira foi muito afetada")
         createCryseAddToArray(name: "Crise da Argentina", stockData: [0.0], curiosity: "A argentina começou ai a se lascar")
+        createCryseAddToArray(name: "Crise da XX", stockData: [0.0], curiosity: "A argentina começou ai a se lascar")
+        createCryseAddToArray(name: "Crise da YY", stockData: [0.0], curiosity: "A argentina começou ai a se lascar")
     }
     
     func drawLineFromPointToPoint(startX: Int, toEndingX endX: Int, startingY startY: Int, toEndingY endY: Int, ofColor lineColor: UIColor, widthOfLine lineWidth: CGFloat, inView view: UIView) {
