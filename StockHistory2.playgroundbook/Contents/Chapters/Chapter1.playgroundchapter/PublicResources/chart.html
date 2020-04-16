@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    </head>
+
+    <body>
+        <div style="width:75%;">
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'line',
+
+                // The data for our dataset
+                data: {
+                    labels: ['1929', '1930', '1931', '1932', '1933', '1934', '1935'],
+                    datasets: [{
+                        label: 'Crise de 29',
+                        borderColor: 'rgb(83,255,100)',
+                        data: [0, 10, 5, 2, 20, 30, 45],
+                        pointBorderWidth: 20,
+                        pointHitRadius: 20,
+                        hoverBorderWidth: 20,
+                        hoverRadius: 10
+                        
+                    }]
+                },
+
+                // Configuration options go here
+                options: {
+                    
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -5,6 +5,9 @@
       location = "container:StockHistory2.playgroundbook">
    </FileRef>
    <FileRef
+      location = "group:Chart">
+   </FileRef>
+   <FileRef
       location = "group:StockHistory2.playgroundbook/Contents">
    </FileRef>
 </Workspace>

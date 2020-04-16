@@ -1,5 +1,9 @@
+
+
+
 import UIKit
 import PlaygroundSupport
+import WebKit
 
 
 public class IntroViewController : UIViewController {
@@ -8,6 +12,8 @@ public class IntroViewController : UIViewController {
     
     var selectedButton: UIButton? = nil
 
+    let webview = WKWebView()
+    
     public override func viewDidLoad() {
         let view = UIView()
         view.backgroundColor = .black
@@ -17,6 +23,8 @@ public class IntroViewController : UIViewController {
         self.view.addSubview(crysesNameLabel)
         self.view.addSubview(curiosityLabel)
         
+        self.loadChart()
+        
         self.addCryses()
         
         for (index, crise) in crises.enumerated(){
@@ -25,6 +33,7 @@ public class IntroViewController : UIViewController {
     }
     
     @objc func buttonAction (sender: UIButton!) {
+        renderChart()
         let lightGreen = UIColor(red:0.14, green:1.00, blue:0.52, alpha:1.00)
         
         if (selectedButton != nil) {
@@ -48,11 +57,6 @@ public class IntroViewController : UIViewController {
         chartView.image = chart
         
         view.addSubview(chartView)
-        
-        
-        drawLineFromPointToPoint(startX: 50, toEndingX: 120, startingY: 550, toEndingY: 300, ofColor: lightGreen, widthOfLine: 15, inView: self.view)
-        drawLineFromPointToPoint(startX: 150, toEndingX: 220, startingY: 300, toEndingY: 500, ofColor: lightGreen, widthOfLine: 15, inView: self.view)
-        drawLineFromPointToPoint(startX: 220, toEndingX: 290, startingY: 500, toEndingY: 300, ofColor: lightGreen, widthOfLine: 15, inView: self.view)
     }
     
     func renderButtons(name: String, index: Int) {
@@ -89,14 +93,14 @@ public class IntroViewController : UIViewController {
     }
     
     func renderCrysesLabels(crysesName: String, crysesCuriosity: String) {
-        self.crysesNameLabel.frame = CGRect(x:10, y:80, width: 400, height: 40)
+        self.crysesNameLabel.frame = CGRect(x:10, y:50, width: 400, height: 40)
         self.crysesNameLabel.text = crysesName
         self.crysesNameLabel.font = UIFont(name: "Raleway", size: 30)
         self.crysesNameLabel.textColor = .white
         
         self.curiosityLabel.lineBreakMode = .byWordWrapping
         self.curiosityLabel.adjustsFontSizeToFitWidth = true
-        self.curiosityLabel.frame = CGRect(x: 10, y: 150, width: 600, height: 20)
+        self.curiosityLabel.frame = CGRect(x: 10, y: 120, width: 600, height: 20)
         self.curiosityLabel.text = crysesCuriosity
         self.curiosityLabel.textColor = .white
         self.curiosityLabel.font = UIFont(name: "Raleway", size: 20)
@@ -109,25 +113,18 @@ public class IntroViewController : UIViewController {
         createCryseAddToArray(name: "Crise da YY", stockData: [0.0], curiosity: "A argentina começou ai a se lascar")
     }
     
-    func drawLineFromPointToPoint(startX: Int, toEndingX endX: Int, startingY startY: Int, toEndingY endY: Int, ofColor lineColor: UIColor, widthOfLine lineWidth: CGFloat, inView view: UIView) {
+    func loadChart() {
+        let url = Bundle.main.url(forResource: "chart", withExtension: "html")
+        webview.isOpaque = false
+        let request = URLRequest(url:url!)
         
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: startX, y: startY))
-        path.addLine(to: CGPoint(x: endX, y: endY))
+        webview.load(request)
         
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
-        shapeLayer.strokeColor = lineColor.cgColor
-        shapeLayer.lineWidth = lineWidth
-        
-        let circleLayer = CAShapeLayer();
-        circleLayer.path = UIBezierPath(ovalIn: CGRect(x: endX-6, y: endY - 20, width: 40, height: 40)).cgPath;
-        circleLayer.strokeColor = lineColor.cgColor
-        circleLayer.fillColor = lineColor.cgColor
-        
-        view.layer.addSublayer(shapeLayer)
-        view.layer.addSublayer(circleLayer)
-        
+        webview.frame = CGRect(x:20, y: 250, width: 800, height: 300)
+    }
+    
+    func renderChart() {
+        self.view.addSubview(webview)
     }
 }
 
