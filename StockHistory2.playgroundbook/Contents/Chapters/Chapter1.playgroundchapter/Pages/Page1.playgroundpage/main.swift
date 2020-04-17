@@ -16,7 +16,7 @@
  # Vamos começar!
  
  
- Clique em um dos botões ao lado e comece a experiência do Stock History :)
+ Clique em run my code e depois em um dos botões ao lado e comece a experiência do Stock History :)
  
  */
 

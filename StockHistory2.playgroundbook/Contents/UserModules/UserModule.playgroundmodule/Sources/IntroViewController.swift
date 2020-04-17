@@ -23,8 +23,6 @@ public class IntroViewController : UIViewController {
         self.view.addSubview(crysesNameLabel)
         self.view.addSubview(curiosityLabel)
         
-        self.loadChart()
-        
         self.addCryses()
         
         for (index, crise) in crises.enumerated(){
@@ -33,6 +31,7 @@ public class IntroViewController : UIViewController {
     }
     
     @objc func buttonAction (sender: UIButton!) {
+        self.loadChart(cryse: sender.titleLabel?.text ?? "")
         renderChart()
         let lightGreen = UIColor(red:0.14, green:1.00, blue:0.52, alpha:1.00)
         
@@ -98,23 +97,33 @@ public class IntroViewController : UIViewController {
         self.crysesNameLabel.font = UIFont(name: "Raleway", size: 30)
         self.crysesNameLabel.textColor = .white
         
+        self.curiosityLabel.numberOfLines = 0
         self.curiosityLabel.lineBreakMode = .byWordWrapping
         self.curiosityLabel.adjustsFontSizeToFitWidth = true
-        self.curiosityLabel.frame = CGRect(x: 10, y: 120, width: 600, height: 20)
+        self.curiosityLabel.frame = CGRect(x: 10, y: 120, width: 600, height: 60)
         self.curiosityLabel.text = crysesCuriosity
         self.curiosityLabel.textColor = .white
         self.curiosityLabel.font = UIFont(name: "Raleway", size: 20)
     }
     
     func addCryses() {
-        createCryseAddToArray(name: "Crise de 29", stockData: [0.0], curiosity: "A industria cafeeira foi muito afetada")
-        createCryseAddToArray(name: "Crise da Argentina", stockData: [0.0], curiosity: "A argentina começou ai a se lascar")
-        createCryseAddToArray(name: "Crise da XX", stockData: [0.0], curiosity: "A argentina começou ai a se lascar")
-        createCryseAddToArray(name: "Crise da YY", stockData: [0.0], curiosity: "A argentina começou ai a se lascar")
+        createCryseAddToArray(name: "Crise de 29", stockData: [0.0], curiosity: "A industria cafeeira foi muito afetada já que um dos maiores importadores eram os Estados Unidos")
+        createCryseAddToArray(name: "Crise da Argentina", stockData: [0.0], curiosity: "O presidente na época anunciou em rede nacional a suspensão dos direitos constitucionais dos cidadãos")
+        createCryseAddToArray(name: "Crise da XX", stockData: [0.0], curiosity: "A crise da lk foi inesperada em todo o mundo e causou danos que demorarão anos para voltar")
+        createCryseAddToArray(name: "Crise da YY", stockData: [0.0], curiosity: "A crise da lk foi inesperada em todo o mundo e causou danos que demorarão anos para voltar")
+        createCryseAddToArray(name: "Coronavirus", stockData: [0.0], curiosity: "O mundo foi surpreendido com um novo virus que deixou a maioria dos paises do mundo em quarentena")
+        createCryseAddToArray(name: "EUA x Irã", stockData: [0.0], curiosity: "No inicio de 2020 o mundo ficou tenso com uma possível guerra do Irã vs Estados Unidos, investidores ficaram com medo")
+        createCryseAddToArray(name: "Crise da KL", stockData: [0.0], curiosity: "A crise da lk foi inesperada em todo o mundo e causou danos que demorarão anos para voltar")
+        createCryseAddToArray(name: "Crise da LK", stockData: [0.0], curiosity: "A crise da lk foi inesperada em todo o mundo e causou danos que demorarão anos para voltar")
+        createCryseAddToArray(name: "Crise da IL", stockData: [0.0], curiosity: "A crise da IL foi inesperada em todo o mundo e causou danos que demorarão anos para voltar")
     }
     
-    func loadChart() {
-        let url = Bundle.main.url(forResource: "chart", withExtension: "html")
+    func loadChart(cryse: String) {
+        let cryseChart = "chart" + cryse
+        var url = Bundle.main.url(forResource: "chart", withExtension: "html")
+        if (cryse == "Crise de 2008") {
+            url = Bundle.main.url(forResource:"chart2008", withExtension: "html")
+        }
         webview.isOpaque = false
         let request = URLRequest(url:url!)
         

@@ -8,6 +8,7 @@
 	<string>Stock</string>
 	<key>Pages</key>
 	<array>
+		<string>Page0.cutscenepage</string>
 		<string>Page1.playgroundpage</string>
 	</array>
 </dict>
